@@ -1,7 +1,7 @@
 resource "aws_cloudfront_distribution" "redirect" {
   origin {
     domain_name = "${aws_s3_bucket.redirect_bucket.bucket}.s3-website.${data.aws_region.current.name}.amazonaws.com"
-    origin_id   = "${aws_s3_bucket.redirect_bucket.bucket}"
+    origin_id   = aws_s3_bucket.redirect_bucket.bucket
 
     custom_origin_config {
       http_port              = 80
@@ -12,11 +12,11 @@ resource "aws_cloudfront_distribution" "redirect" {
   }
 
   price_class     = "PriceClass_100"
-  comment         = "${aws_s3_bucket.redirect_bucket.bucket}"
+  comment         = aws_s3_bucket.redirect_bucket.bucket
   enabled         = true
   is_ipv6_enabled = false
 
-  aliases = ["www.${var.zone}", "${var.zone}"]
+  aliases = ["www.${var.zone}", var.zone]
 
   restrictions {
     geo_restriction {
@@ -27,7 +27,7 @@ resource "aws_cloudfront_distribution" "redirect" {
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "${aws_s3_bucket.redirect_bucket.bucket}"
+    target_origin_id = aws_s3_bucket.redirect_bucket.bucket
     compress         = true
 
     min_ttl     = 31536000
@@ -46,10 +46,10 @@ resource "aws_cloudfront_distribution" "redirect" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = "${aws_acm_certificate.cert.arn}"
+    acm_certificate_arn = aws_acm_certificate.cert.arn
     ssl_support_method  = "sni-only"
   }
 
   wait_for_deployment = false
-  depends_on          = ["aws_acm_certificate_validation.validation"]
+  depends_on          = [aws_acm_certificate_validation.validation]
 }
