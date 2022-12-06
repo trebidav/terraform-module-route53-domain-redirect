@@ -8,6 +8,6 @@ resource "aws_s3_bucket" "redirect_bucket" {
   acl    = "public-read"
 
   website {
-    redirect_all_requests_to = "${var.target_url}"
+    redirect_all_requests_to = var.target_url
   }
 }
