@@ -16,7 +16,7 @@ resource "aws_cloudfront_distribution" "redirect" {
   enabled         = true
   is_ipv6_enabled = false
 
-  aliases = ["www.${var.zone}", "${var.zone}"]
+  aliases = ["www.${var.zone}", var.zone]
 
   restrictions {
     geo_restriction {

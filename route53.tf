@@ -26,18 +26,19 @@ resource "aws_route53_record" "redirect" {
   }
 }
 
-resource "aws_route53_record" "cert_validation_1" {
-  name    = aws_acm_certificate.cert.domain_validation_options.0.resource_record_name
-  type    = aws_acm_certificate.cert.domain_validation_options.0.resource_record_type
+resource "aws_route53_record" "cert_validation" {
+  # https://github.com/hashicorp/terraform-provider-aws/issues/10098#issuecomment-663562342
+  for_each = {
+    for dvo in aws_acm_certificate.cert.domain_validation_options: dvo.domain_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    }
+  }
+  name    = each.value.name
+  records = [ each.value.record ]
+  type    = each.value.type
   zone_id = data.aws_route53_zone.zone.zone_id
-  records = [aws_acm_certificate.cert.domain_validation_options.0.resource_record_value]
-  ttl     = 60
-}
 
-resource "aws_route53_record" "cert_validation_2" {
-  name    = aws_acm_certificate.cert.domain_validation_options.1.resource_record_name
-  type    = aws_acm_certificate.cert.domain_validation_options.1.resource_record_type
-  zone_id = data.aws_route53_zone.zone.zone_id
-  records = [aws_acm_certificate.cert.domain_validation_options.1.resource_record_value]
   ttl     = 60
 }
