@@ -1,9 +1,9 @@
 variable "zone" {
   description = "Route53 zone name"
-  type        = "string"
+  type        = string
 }
 
 variable "target_url" {
   description = "URL to redirect to"
-  type        = "string"
+  type        = string
 }
