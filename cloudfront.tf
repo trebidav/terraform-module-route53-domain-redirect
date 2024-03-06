@@ -35,7 +35,7 @@ resource "aws_cloudfront_distribution" "redirect" {
     default_ttl = 31536000
 
     forwarded_values {
-      query_string = false
+      query_string = var.cloudfront_forward_query_string
 
       cookies {
         forward = "none"

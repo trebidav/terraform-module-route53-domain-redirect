@@ -14,4 +14,4 @@ Both www and apex A records are created and pointed to a CloudFront distribution
 |------|-------------|:----:|:-----:|:-----:|
 | target\_url | URL to redirect to | string | n/a | yes |
 | zone | Route53 zone name | string | n/a | yes |
-
+| cloudfront\_forward\_query\_string | Toggle forwarding of query strings for CloudFront | bool | false | no |
