@@ -4,7 +4,7 @@ resource "random_string" "hash" {
 }
 
 resource "aws_s3_bucket" "redirect_bucket" {
-  bucket = "redirect-${var.zone}-${lower(random_string.hash.result)}"
+  bucket = "redirect-${var.subdomain}${var.zone}-${lower(random_string.hash.result)}"
 }
 
 resource "aws_s3_bucket_website_configuration" "redirect_bucket" {

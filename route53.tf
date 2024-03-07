@@ -3,9 +3,9 @@ data "aws_route53_zone" "zone" {
   private_zone = false
 }
 
-resource "aws_route53_record" "redirect-www" {
+resource "aws_route53_record" "redirect" {
   zone_id = data.aws_route53_zone.zone.zone_id
-  name    = data.aws_route53_zone.zone.name
+  name    = "${var.subdomain}${data.aws_route53_zone.zone.name}"
   type    = "A"
 
   alias {
@@ -15,9 +15,9 @@ resource "aws_route53_record" "redirect-www" {
   }
 }
 
-resource "aws_route53_record" "redirect" {
+resource "aws_route53_record" "redirect-www" {
   zone_id = data.aws_route53_zone.zone.zone_id
-  name    = "www.${data.aws_route53_zone.zone.name}"
+  name    = "www.${var.subdomain}${data.aws_route53_zone.zone.name}"
   type    = "A"
 
   alias {

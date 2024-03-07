@@ -1,7 +1,7 @@
 resource "aws_acm_certificate" "cert" {
-  domain_name               = var.zone
+  domain_name               = "${var.subdomain}${var.zone}"
   validation_method         = "DNS"
-  subject_alternative_names = ["www.${var.zone}"]
+  subject_alternative_names = ["www.${var.subdomain}${var.zone}"]
 
   lifecycle {
     create_before_destroy = true

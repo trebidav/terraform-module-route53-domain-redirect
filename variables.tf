@@ -19,3 +19,9 @@ variable "cloudfront_wait_for_deployment" {
   type        = bool
   default     = false
 }
+
+variable "subdomain" {
+  description = "Subdomain for the CloudFront (has to end with a dot if not empty!)"
+  type        = string
+  default     = ""
+}
