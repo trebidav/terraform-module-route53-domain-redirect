@@ -13,3 +13,9 @@ variable "cloudfront_forward_query_string" {
   type        = bool
   default     = false
 }
+
+variable "cloudfront_wait_for_deployment" {
+  description = "Toggle wait for deployment for CloudFront"
+  type        = bool
+  default     = false
+}

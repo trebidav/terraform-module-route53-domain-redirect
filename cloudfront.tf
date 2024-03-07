@@ -50,5 +50,5 @@ resource "aws_cloudfront_distribution" "redirect" {
     ssl_support_method  = "sni-only"
   }
 
-  wait_for_deployment = false
+  wait_for_deployment = var.cloudfront_wait_for_deployment
 }
