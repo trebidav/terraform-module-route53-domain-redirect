@@ -12,6 +12,7 @@ resource "aws_s3_bucket_website_configuration" "redirect_bucket" {
 
   redirect_all_requests_to {
     host_name = var.target_url
+    protocol  = "https"
   }
 }
 
