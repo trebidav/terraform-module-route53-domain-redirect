@@ -16,7 +16,7 @@ resource "aws_cloudfront_distribution" "redirect" {
   enabled         = true
   is_ipv6_enabled = false
 
-  aliases = ["www.${var.zone}", var.zone]
+  aliases = ["www.${var.subdomain}${var.zone}", "${var.subdomain}${var.zone}"]
 
   restrictions {
     geo_restriction {
@@ -35,7 +35,7 @@ resource "aws_cloudfront_distribution" "redirect" {
     default_ttl = 31536000
 
     forwarded_values {
-      query_string = false
+      query_string = var.cloudfront_forward_query_string
 
       cookies {
         forward = "none"
@@ -50,6 +50,5 @@ resource "aws_cloudfront_distribution" "redirect" {
     ssl_support_method  = "sni-only"
   }
 
-  wait_for_deployment = false
-  depends_on          = [aws_acm_certificate_validation.validation]
+  wait_for_deployment = var.cloudfront_wait_for_deployment
 }
